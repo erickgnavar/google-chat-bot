@@ -7,6 +7,7 @@ defmodule Alfred.MixProject do
       version: "0.1.0",
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
+      aliases: aliases(),
       deps: deps()
     ]
   end
@@ -25,7 +26,19 @@ defmodule Alfred.MixProject do
       {:ecto, "~> 3.4"},
       {:ecto_sql, "~> 3.4"},
       {:postgrex, "~> 0.15.4"},
-      {:oban, "~> 1.2"}
+      {:oban, "~> 1.2"},
+      {:plug, "~> 1.10"},
+      {:plug_cowboy, "~> 2.0"},
+      {:jason, "~> 1.2"}
+    ]
+  end
+
+  defp aliases do
+    [
+      setup: ["deps.get", "ecto.setup"],
+      "ecto.setup": ["ecto.create", "ecto.migrate"],
+      "ecto.reset": ["ecto.drop", "ecto.setup"],
+      test: ["ecto.create --quiet", "ecto.migrate", "test"]
     ]
   end
 end

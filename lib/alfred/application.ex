@@ -8,7 +8,11 @@ defmodule Alfred.Application do
   def start(_type, _args) do
     children = [
       {Alfred.Repo, []},
-      {Oban, oban_config()}
+      {Oban, oban_config()},
+      {Plug.Cowboy,
+       scheme: :http,
+       plug: AlfredWeb.Router,
+       options: [port: String.to_integer(System.get_env("PORT", "4000"))]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

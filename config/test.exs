@@ -4,8 +4,7 @@ config :logger, level: :warn
 
 config :alfred, Oban,
   crontab: false,
-  queues: false,
-  plugins: false
+  queues: false
 
 config :alfred, Alfred.Repo,
   username: "postgres",
