@@ -14,6 +14,7 @@ defmodule Alfred.Worker do
     case apply(module, :run, [args]) do
       {:ok, result} ->
         TaskManager.update_result(job.id, result)
+        Alfred.ChatSender.notify_task_result(job.id)
         :ok
 
       {:error, reason} ->

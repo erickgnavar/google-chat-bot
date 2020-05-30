@@ -12,3 +12,5 @@ config :alfred, Alfred.Repo,
   database: "alfred_test#{System.get_env("MIX_TEST_PARTITION")}",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+config :goth, disabled: true

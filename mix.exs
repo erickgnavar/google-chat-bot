@@ -29,7 +29,9 @@ defmodule Alfred.MixProject do
       {:oban, "~> 1.2"},
       {:plug, "~> 1.10"},
       {:plug_cowboy, "~> 2.0"},
-      {:jason, "~> 1.2"}
+      {:jason, "~> 1.2"},
+      {:mojito, "~> 0.6.4"},
+      {:goth, "~> 1.2"}
     ]
   end
 

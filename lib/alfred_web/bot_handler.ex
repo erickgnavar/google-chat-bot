@@ -7,6 +7,10 @@ defmodule AlfredWeb.BotHandler do
   alias Alfred.Contexts.TaskManager
   alias Alfred.Dispatcher
 
+  @doc """
+  Parses a google chat event and execute an action after it evaluate the content of the message.
+  """
+  @spec parse_event(map) :: map
   def parse_event(%{"type" => "ADDED_TO_SPACE", "user" => %{"name" => name}}) do
     %{"text" => "Thanks  <#{name}> for adding me :)"}
   end
@@ -16,29 +20,30 @@ defmodule AlfredWeb.BotHandler do
     %{"text" => "bye"}
   end
 
-  def parse_event(%{
-        "message" => %{"argumentText" => text}
-      }) do
-    text
+  def parse_event(event) do
+    event
+    |> get_in(["message", "argumentText"])
     |> String.trim()
-    |> parse_command()
+    |> parse_command(event)
   end
 
-  defp parse_command("ping") do
+  defp parse_command("ping", event) do
     {:ok, task} = Dispatcher.dispatch("ping", nil)
+    # TODO: this should be a general behaviour for every message
+    TaskManager.update_task_from_chat_event(task.uid, event)
 
     %{
       "text" => "Task is being processed, you can ask for status with `check #{task.uid}`"
     }
   end
 
-  defp parse_command("check " <> uid) do
+  defp parse_command("check " <> uid, _) do
     uid
     |> TaskManager.get_task()
     |> task_card()
   end
 
-  defp parse_command(_) do
+  defp parse_command(_, _) do
     %{"text" => "Command not found"}
   end
 

@@ -12,7 +12,8 @@ defmodule Alfred.Application do
       {Plug.Cowboy,
        scheme: :http,
        plug: AlfredWeb.Router,
-       options: [port: String.to_integer(System.get_env("PORT", "4000"))]}
+       options: [port: String.to_integer(System.get_env("PORT", "4000"))]},
+      {Alfred.ChatSender, []}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
