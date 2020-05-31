@@ -13,6 +13,7 @@ defmodule Alfred.Dispatcher do
   """
   @spec dispatch(String.t(), [any]) :: {:ok, struct}
   def dispatch(module_name, args) do
+    # TODO: replace module_name with the module itself
     {:ok, job} =
       %{
         "module_name" => module_name,

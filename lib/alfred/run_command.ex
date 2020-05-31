@@ -6,5 +6,21 @@ defmodule Alfred.Commands.RunCommand do
   @doc """
   Define the function which will be called when the command is executed.
   """
-  @callback run([any]) :: {:ok, String.t()} | {:error, String.t()}
+  @callback run(map) :: {:ok, String.t()} | {:error, String.t()}
+
+  @doc """
+  Define the regex that will match the received command from chat event,
+  the values extracted from this regex will be passed to command execution.
+  """
+  @callback regex :: Regex.t()
+
+  @doc """
+  A description about what the command does.
+  """
+  @callback help :: String.t()
+
+  @doc """
+  A sample command.
+  """
+  @callback sample :: String.t()
 end

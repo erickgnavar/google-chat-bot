@@ -6,8 +6,18 @@ defmodule Alfred.Commands.Ping do
   @behaviour Alfred.Commands.RunCommand
 
   @impl true
-  def run(_) do
-    Process.sleep(10_000)
-    {:ok, "pong"}
+  def run(%{"times" => times}) do
+    times = String.to_integer(times)
+    Process.sleep(times * 1_000)
+    {:ok, "pong after #{times} secs"}
   end
+
+  @impl true
+  def regex, do: ~r/ping\ (?<times>\d+)/i
+
+  @impl true
+  def help, do: "Receive a number and wait until that time in seconds to respond."
+
+  @impl true
+  def sample, do: "ping 10"
 end
