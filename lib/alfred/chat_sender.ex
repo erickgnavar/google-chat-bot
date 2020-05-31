@@ -21,7 +21,7 @@ defmodule Alfred.ChatSender do
     task = TaskManager.get_task_by_job_id(job_id)
     user = task.user_metadata["name"]
     # TODO: add a better presentation for task result
-    text = "Hey <#{user}>, here is your result: #{task.result}"
+    text = "Hey <#{user}>, you asked for `#{task.command}` and here is the result: #{task.result}"
 
     Logger.info("Notifying result of task:#{task.uid}")
     GoogleChatApi.send_message(task.chat_space, text, task.chat_thread)
